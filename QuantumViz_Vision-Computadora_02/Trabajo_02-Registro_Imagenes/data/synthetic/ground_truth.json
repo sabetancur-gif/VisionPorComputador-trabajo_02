@@ -1,0 +1,30 @@
+[
+  {
+    "file": "../data/synthetic/synthetic_1.png",
+    "angle": 0,
+    "scale": 1.0,
+    "tx": 0,
+    "ty": 0
+  },
+  {
+    "file": "../data/synthetic/synthetic_2.png",
+    "angle": 10,
+    "scale": 1.01,
+    "tx": 5,
+    "ty": -3
+  },
+  {
+    "file": "../data/synthetic/synthetic_3.png",
+    "angle": -15,
+    "scale": 1.02,
+    "tx": 10,
+    "ty": -6
+  },
+  {
+    "file": "../data/synthetic/synthetic_4.png",
+    "angle": 25,
+    "scale": 1.03,
+    "tx": 15,
+    "ty": -9
+  }
+]

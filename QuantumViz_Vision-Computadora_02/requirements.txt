@@ -1,0 +1,17 @@
+# Dependencias mínimas recomendadas para ejecutar notebooks y scripts del proyecto.
+numpy>=1.23
+scipy>=1.7
+opencv-contrib-python>=4.5
+scikit-image>=0.19
+scikit-learn>=1.0
+matplotlib>=3.5
+pandas>=1.5
+tqdm>=4.60
+imageio>=2.9
+Pillow>=9.0
+jupyter>=1.0
+ipython>=8.0
+ipywidgets>=8.0
+pytest>=7.0
+
+
