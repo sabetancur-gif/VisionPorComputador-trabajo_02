@@ -13,7 +13,7 @@ Este repositorio contiene el folder **`QuantumViz_Vision-Computador_01`**, en el
 
 ### 📁 Estructura del repositorio
 
-'''
+```
 proyecto-registro-imagenes/
 ├── README.md                        # (este archivo)
 ├── requirements.txt                 # dependencias Python
@@ -34,7 +34,7 @@ proyecto-registro-imagenes/
 		├── registration.py              # cálculo de homografías / transformaciones y fusión
 		├── measurement.py               # calibración de escala y medidas en la escena
 		└── utils.py                     # utilidades (I/O, visualización, helpers)
-'''
+```
 
 ---
 
