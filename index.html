@@ -124,7 +124,7 @@
 
     <div class="figure">
       <img src="QuantumViz_Vision-Computadora_02/Trabajo_02-Registro_Imagenes/data/synthetic/transform_4/step3_matches.png" alt="Registro sintético - puntos de coincidencia" />
-      <div class="caption">Ilustración 1. Registro sintético – alineación de imagen base y transformada (coloca aquí la imagen extraída del PDF en images/registro_sintetico.png).</div>
+      <div class="caption">Ilustración 1. Registro sintético – alineación de imagen base y transformada.</div>
     </div>
 
     <!-- Tabla de validación -->
@@ -133,11 +133,11 @@
       <thead>
         <tr>
           <th>Caso</th>
-          <th>Escala (gt)</th>
-          <th>Escala (est.)</th>
+          <th>Escala (GT)</th>
+          <th>Escala (Est)</th>
           <th>Error escala (%)</th>
-          <th>Rotación (gt °)</th>
-          <th>Rotación (est. °)</th>
+          <th>Rotación (GT°)</th>
+          <th>Rotación (Est°)</th>
           <th>Error angular (°)</th>
         </tr>
       </thead>
@@ -149,6 +149,10 @@
       </tbody>
     </table>
 
+    <p>Donde: </p>
+    <ol>
+      <li><strong> GT (ground truth): representa la imagen bajo las tranformaciones en ground truth</strong>
+      <li><strong> Est: representa la imagen base sin ninguna tranformacion geomética</strong>
     <canvas id="validationChart" style="max-width:100%; height:320px;"></canvas>
 
     <h3>2. Registro de imágenes reales</h3>
@@ -181,7 +185,7 @@
         <tr><td>Cuadro (altura)</td><td>499.0</td><td>1.17</td><td>0.010</td></tr>
         <tr><td>Mesa (ancho)</td><td>248.2</td><td>0.582</td><td>0.005</td></tr>
         <tr><td>Ventana lateral</td><td>172.8</td><td>0.432</td><td>0.0039</td></tr>
-        <tr><td>Silla (respaldo)</td><td>263.7</td><td>0.659</td><td>0.0056/td></tr>
+        <tr><td>Silla (respaldo)</td><td>263.7</td><td>0.659</td><td>0.0056</td></tr>
         <tr><td>Planta decorativa</td><td>164.39</td><td>0.411</td><td>0.0037</td></tr>
       </tbody>
     </table>
@@ -214,7 +218,6 @@
       <li>Zhou, L., Wu, G., Zuo, Y., Chen, X., & Hu, H. (2024). A comprehensive review of vision-based 3D reconstruction methods. Sensors, 24(7).</li>
     </ol>
 
-    <p style="margin-top:2rem; color:var(--muted); font-size:0.9rem;">Nota: este archivo incluye TODO el texto del informe. Las imágenes y figuras se colocan como <code>images/registro_sintetico.png</code>, <code>images/emparejamiento.png</code>, <code>images/panorama.png</code>. Si quieres que extraiga automáticamente las imágenes del PDF y las coloque en la carpeta <code>images/</code>, dímelo y las exporto aquí mismo.</p>
   </main>
 
   <script>
@@ -272,7 +275,7 @@
 
       // --- Gráfica de mediciones ---
       const measureLabels = ['Cuadro','Mesa','Ventana','Silla','Planta'];
-      const measureMeters = [1.17,0.65,0.94,0.44,1.08];
+      const measureMeters = [1.17,0.582,0.432,0.659,0.411];
       const ctx2 = document.getElementById('measureChart').getContext('2d');
       new Chart(ctx2, {
         type:'bar',
