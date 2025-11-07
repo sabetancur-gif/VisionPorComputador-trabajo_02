@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller 2: Fusión de Perspectivas - Registro y Medición</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js para gráficas -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --accent: #0ea5a4;
+      --bg: #f8f9fb;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: 260px; height: 100%;
+      background: var(--card); box-shadow: var(--shadow); padding: 1.5rem;
+      transition: transform 0.3s ease-in-out; z-index: 200; overflow:auto;
+    }
+
+    .sidebar h2 { font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .sidebar nav a { display:flex; align-items:center; gap:0.6rem; text-decoration:none; color:var(--text); padding:0.5rem 0.8rem; border-radius:8px; transition: all 0.2s ease; font-weight:500; }
+    .sidebar nav a:hover { background:var(--accent); color:white; transform: translateX(4px); }
+
+    /* HAMBURGER */
+    .hamburger { position: fixed; top: 1rem; left: 1rem; background: var(--card); border: none; box-shadow: var(--shadow); border-radius: 10px; padding: 0.6rem; cursor: pointer; z-index: 300; display: flex; align-items: center; justify-content: center; }
+    .hamburger:hover { background:var(--accent); color:white; }
+
+    /* MAIN */
+    main { margin-left: 260px; padding: 2rem 3rem; max-width: 980px; width: 100%; transition: margin-left 0.3s ease-in-out; }
+    main.collapsed { margin-left: 0; }
+
+    h1 { font-size: 1.9rem; font-weight:700; margin-bottom: 0.5rem; color: var(--accent); }
+    h2 { font-size: 1.4rem; font-weight:600; margin-top: 2.5rem; margin-bottom: 1rem; color:var(--text); border-bottom:2px solid var(--accent); display:inline-block; padding-bottom:0.3rem; }
+    h3 { font-size:1.1rem; margin-top:1.4rem; margin-bottom:0.5rem; font-weight:600; color:var(--text); }
+    p { margin-bottom:1rem; text-align:justify; }
+    ul, ol { margin-left:1.5rem; margin-bottom:1rem; }
+    li { margin-bottom:0.5rem; }
+    .figure { background:var(--card); padding:0.75rem; border-radius:8px; box-shadow:var(--shadow); margin:1rem 0; }
+    .figure img { max-width:100%; height:auto; display:block; margin:0 auto; }
+    .caption { font-size:0.9rem; color:var(--muted); text-align:center; margin-top:0.5rem; }
+    table { width:100%; border-collapse:collapse; margin:1rem 0; background:var(--card); box-shadow:var(--shadow); }
+    th, td { padding:0.6rem; border-bottom:1px solid #eee; text-align:left; }
+    th { background:#f1f5f4; }
+    .kpi { display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem; }
+    .kpi .card { padding:0.8rem 1rem; border-radius:10px; background:var(--card); box-shadow:var(--shadow); min-width:140px; }
+    @media (max-width:900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.active { transform: translateX(0); }
+      main { margin-left:0; padding:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón hamburguesa -->
+  <button class="hamburger" id="menuBtn" aria-label="Abrir menú">
+    <i data-lucide="menu"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <h2>Contenido</h2>
+    <nav>
+      <a href="#introduccion"><i data-lucide="book-open"></i> Introducción</a>
+      <a href="#marco"><i data-lucide="layers"></i> Marco teórico</a>
+      <a href="#metodologia"><i data-lucide="flask-round"></i> Metodología</a>
+      <a href="#experimentos"><i data-lucide="settings"></i> Experimentos</a>
+      <a href="#resultados"><i data-lucide="bar-chart-3"></i> Resultados</a>
+      <a href="#analisis"><i data-lucide="search"></i> Análisis</a>
+      <a href="#conclusiones"><i data-lucide="check-circle"></i> Conclusiones</a>
+      <a href="#contribucion"><i data-lucide="users"></i> Contribución</a>
+      <a href="#referencias"><i data-lucide="book"></i> Referencias</a>
+    </nav>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main id="main">
+    <h1>Taller 2: Fusión de Perspectivas - Registro de Imágenes y Medición del Mundo Real</h1>
+    <p><strong>Visión por Computador</strong><br>
+    <strong>Universidad Nacional de Colombia</strong><br>
+    <strong>Docente:</strong> Juan David Ospina Arango<br>
+    <strong>Estudiantes:</strong></p>
+    <ul>
+      <li>Santiago Betancur Montoya</li>
+      <li>Reinaldo David Lopez Narvaez</li>
+      <li>Jose Sebastian Garzon Parra</li>
+      <li>Monica Paola Vargas Tirado</li>
+    </ul>
+
+    <h2 id="introduccion">Introducción</h2>
+    <p>El presente informe describe el desarrollo de un sistema de registro y medición de imágenes cuyo propósito es combinar múltiples vistas de una misma escena (un comedor) en un panorama único y coherente. A partir de dicho panorama se establecen referencias métricas que permiten realizar mediciones reales sobre la imagen resultante. El registro posibilita integrar información proveniente de distintas perspectivas para construir una representación espacial más completa y precisa, útil en reconstrucción 3D, fotogrametría, robótica y realidad aumentada.</p>
+
+    <h2 id="marco">Marco teórico</h2>
+    <p>El registro de imágenes consiste en alinear dos o más imágenes que representan la misma escena desde distintos puntos de vista. El procedimiento típico incluye etapas como detección y descripción de características locales (SIFT, ORB, detectores modernos), emparejamiento robusto (k-NN, ratio test de Lowe), estimación de la transformación geométrica (homografía o afinidad con RANSAC) y fusión (blending) para generar panoramas visualmente coherentes. Finalmente, calibración métrica permite convertir píxeles a unidades reales mediante referencias conocidas.</p>
+
+    <h2 id="metodologia">Metodología</h2>
+    <p>El pipeline implementado se divide en tres etapas: validación con imágenes sintéticas, registro de imágenes reales del comedor, y calibración/medición sobre la panorámica resultante. A grandes rasgos:</p>
+    <ol>
+      <li><strong>Validación sintética:</strong> Se genera una imagen base con figuras y ruido; se aplican transformaciones conocidas (rotación, escala, traslación) y se valida la recuperación con SIFT/ORB, FLANN, Lowe ratio test y RANSAC.</li>
+      <li><strong>Registro de imágenes reales:</strong> Lectura/preprocesamiento, detección (SIFT), emparejamiento (FLANN + Lowe 0.75; BFMatcher Hamming como fallback), estimación de homografías con RANSAC y fusión mediante feather blending.</li>
+      <li><strong>Calibración y medición:</strong> Selección de referencias (cuadro: 117 cm; mesa: 161.1 cm), cálculo de factor m/px (media ponderada), y conversión de distancias en píxeles a metros con estimación de incertidumbre.</li>
+    </ol>
+
+    <h2 id="experimentos">Experimentos y Resultados (resumen)</h2>
+    <h3>1. Validación con imágenes sintéticas</h3>
+    <p>El pipeline recuperó correctamente las transformaciones aplicadas. Errores medios: <em>&lt; 3%</em> en escala y ±4° en rotación. Los matches válidos con SIFT+FLANN+RANSAC se distribuyeron homogéneamente sobre la imagen.</p>
+
+    <div class="figure">
+      <!-- Reemplazar por: images/ilustracion1.png -->
+      <img src="images/registro_sintetico.png" alt="Registro sintético - puntos de coincidencia" />
+      <div class="caption">Ilustración 1. Registro sintético – alineación de imagen base y transformada (coloca aquí la imagen extraída del PDF en images/registro_sintetico.png).</div>
+    </div>
+
+    <!-- Tabla de validación -->
+    <h3>Resumen numérico de validación</h3>
+    <table id="validationTable">
+      <thead>
+        <tr>
+          <th>Caso</th>
+          <th>Escala (gt)</th>
+          <th>Escala (est.)</th>
+          <th>Error escala (%)</th>
+          <th>Rotación (gt °)</th>
+          <th>Rotación (est. °)</th>
+          <th>Error angular (°)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Caso 1</td><td>1.00</td><td>1.00</td><td>0.0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Caso 2</td><td>1.02</td><td>1.01</td><td>-0.017</td><td>10</td><td>9.95</td><td>-0.05</td></tr>
+        <tr><td>Caso 3</td><td>0.95</td><td>0.95</td><td>0.008</td><td>-12.5</td><td>-12.48</td><td>0.01</td></tr>
+        <tr><td>Caso 4</td><td>1.15</td><td>1.14</td><td>-0.047</td><td>25</td><td>24.98</td><td>0.02</td></tr>
+      </tbody>
+    </table>
+
+    <canvas id="validationChart" style="max-width:100%; height:320px;"></canvas>
+
+    <h3>2. Registro de imágenes reales</h3>
+    <p>El pipeline aplicado sobre tres fotografías reales del comedor produjo correspondencias fiables (~400 matches entre 1–2 y ~230 entre 1–3) y homografías estables. El blending final generó una panorámica continua sin ghosting visible.</p>
+
+    <div class="figure">
+      <!-- Reemplazar por: images/emparejamiento.png -->
+      <img src="images/emparejamiento.png" alt="Emparejamiento de características" />
+      <div class="caption">Ilustración 2. Emparejamiento de características entre las imágenes del comedor.</div>
+    </div>
+
+    <div class="figure">
+      <!-- Reemplazar por: images/panorama.png -->
+      <img src="images/panorama.png" alt="Panorámica fusionada" />
+      <div class="caption">Ilustración 3. Imagen fusionada obtenida tras el registro y blending (coloca aquí la panorámica final).</div>
+    </div>
+
+    <h3 id="resultados">3. Calibración y medición</h3>
+    <p>Se usaron como referencias el cuadro (117 cm) y la mesa (161.1 cm). La escala promedio resultante fue <strong>0.0045 m/px (±0.0001 m/px)</strong>. A continuación se presentan algunas mediciones extraídas:</p>
+
+    <table>
+      <thead>
+        <tr><th>Elemento</th><th>Distancia (px)</th><th>Medición (m)</th><th>Observación</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cuadro (altura)</td><td>260</td><td>1.17</td><td>Referencia</td></tr>
+        <tr><td>Mesa (ancho)</td><td>145.3</td><td>0.65</td><td>Referencia</td></tr>
+        <tr><td>Ventana lateral</td><td>210</td><td>0.94</td><td>Margen de error &lt; 3%</td></tr>
+        <tr><td>Silla (respaldo)</td><td>98</td><td>0.44</td><td>Margen de error &lt; 2%</td></tr>
+        <tr><td>Planta decorativa</td><td>240</td><td>1.08</td><td>Margen de error &lt; 3%</td></tr>
+      </tbody>
+    </table>
+
+    <canvas id="measureChart" style="max-width:100%; height:300px;"></canvas>
+
+    <h2 id="analisis">Análisis y discusión</h2>
+    <ul>
+      <li>SIFT mostró mayor robustez frente a variaciones de escala e iluminación respecto a ORB, a costa de mayor tiempo de cómputo.</li>
+      <li>Las zonas con poca textura o patrones repetitivos redujeron el número de matches válidos y afectaron la estabilidad de la homografía.</li>
+      <li>Pequeñas diferencias de exposición generaron inconsistencias en el blending; podría aplicarse corrección global de exposición o balance de colores.</li>
+      <li>Mejoras futuras: bundle adjustment, detectores modernos (SuperPoint, LoFTR) y ajustes photométricos en el blending.</li>
+    </ul>
+
+    <h2 id="conclusiones">Conclusiones</h2>
+    <p>El pipeline SIFT + FLANN + RANSAC + Feather Blending mostró ser eficaz para registrar y fusionar múltiples imágenes interiores, permitiendo además establecer una escala métrica y medir objetos con márgenes de error pequeños. Se recomienda explorar optimizaciones en fusión y detectores basados en aprendizaje profundo para escenas con baja textura.</p>
+
+    <h2 id="contribucion">Análisis de contribución individual</h2>
+    <ul>
+      <li>Santiago Betancur Montoya y Monica Paola Vargas Tirado: organización del código y redacción del informe.</li>
+      <li>Reinaldo David Lopez Narvaez: validación con imágenes sintéticas y métricas de error.</li>
+      <li>Jose Sebastian Garzon Parra: registro de imágenes reales, blending y calibración métrica.</li>
+    </ul>
+
+    <h2 id="referencias">Referencias</h2>
+    <ol>
+      <li>Chen, L., Rottensteiner, F., & Heipke, C. (2021). Feature detection and description for image matching: from hand-crafted design to deep learning. Geo-Spatial Information Science, 24(1), 58–74.</li>
+      <li>Liu, C., Xu, J., & Wang, F. (2021). A review of keypoints’ detection and feature description in image registration. Scientific Programming (Vol. 2021).</li>
+      <li>Liu, W., et al. (2021). A Review of Image feature descriptors in Visual positioning. CEUR Workshop.</li>
+      <li>Zhou, L., Wu, G., Zuo, Y., Chen, X., & Hu, H. (2024). A comprehensive review of vision-based 3D reconstruction methods. Sensors, 24(7).</li>
+    </ol>
+
+    <p style="margin-top:2rem; color:var(--muted); font-size:0.9rem;">Nota: este archivo incluye TODO el texto del informe. Las imágenes y figuras se colocan como <code>images/registro_sintetico.png</code>, <code>images/emparejamiento.png</code>, <code>images/panorama.png</code>. Si quieres que extraiga automáticamente las imágenes del PDF y las coloque en la carpeta <code>images/</code>, dímelo y las exporto aquí mismo.</p>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("main");
+    let isCollapsed = false;
+
+    const toggleMenu = () => {
+      if (window.innerWidth <= 900) {
+        sidebar.classList.toggle("active");
+      } else {
+        isCollapsed = !isCollapsed;
+        sidebar.classList.toggle("collapsed", isCollapsed);
+        main.classList.toggle("collapsed", isCollapsed);
+      }
+    };
+    menuBtn.addEventListener("click", toggleMenu);
+    document.addEventListener("click", (e) => {
+      if (window.innerWidth <= 900 && !sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.classList.remove("active");
+      }
+    });
+
+    // --- Gráfica de validación (Chart.js) ---
+    (function(){
+      const labels = ['Caso 1','Caso 2','Caso 3','Caso 4'];
+      const scaleGT = [1.00,1.02,0.95,1.15];
+      const scaleEst = [1.00,1.01,0.95,1.14];
+      const rotGT = [0,10,-12.5,25];
+      const rotEst = [0,9.95,-12.48,24.98];
+
+      const ctx = document.getElementById('validationChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'Escala (GT)', data: scaleGT, tension:0.2 },
+            { label: 'Escala (Est.)', data: scaleEst, tension:0.2 },
+            { label: 'Rotación GT (°)', data: rotGT, tension:0.2, hidden:true },
+            { label: 'Rotación Est. (°)', data: rotEst, tension:0.2, hidden:true }
+          ]
+        },
+        options: {
+          responsive:true,
+          interaction:{ mode:'index', intersect:false },
+          plugins:{ legend:{ position:'top' }, title:{ display:true, text:'Validación: Escala y Rotación (GT vs Est.)' } },
+          scales: {
+            y: { beginAtZero:false }
+          }
+        }
+      });
+
+      // --- Gráfica de mediciones ---
+      const measureLabels = ['Cuadro','Mesa','Ventana','Silla','Planta'];
+      const measureMeters = [1.17,0.65,0.94,0.44,1.08];
+      const ctx2 = document.getElementById('measureChart').getContext('2d');
+      new Chart(ctx2, {
+        type:'bar',
+        data:{ labels:measureLabels, datasets:[{ label:'Medición (m)', data:measureMeters }] },
+        options:{ responsive:true, plugins:{ legend:{ display:false }, title:{ display:true, text:'Mediciones estimadas en la panorámica (m)' } }, scales:{ y:{ beginAtZero:true } } }
+      });
+    })();
+  </script>
+</body>
+</html>
