@@ -1,9 +1,9 @@
 # Visión por Computador: QuantumViz
 
-## 🧠 Trabajo 01: Fusión de Perspectivas - Registro de Imágenes y Medición del Mundo Real
+## 🧠 Trabajo 02: Fusión de Perspectivas - Registro de Imágenes y Medición del Mundo Real
 
 ### 📄 Descripción
-Este repositorio contiene el folder **`QuantumViz_Vision-Computador_01`**, en el cual se encuentra una guía práctica para ejecutar, validar y entender el pipeline de registro y medición de objetos en imágenes. Diseñado para: reproducibilidad (notebooks), validación con datos sintéticos (ground-truth) y uso en proyectos académicos o muestra de portafolio.
+Este repositorio contiene el folder **`QuantumViz_Vision-Computador_02`**, en el cual se encuentra una guía práctica para ejecutar, validar y entender el pipeline de registro y medición de objetos en imágenes. Diseñado para: reproducibilidad (notebooks), validación con datos sintéticos (ground-truth) y uso en proyectos académicos o muestra de portafolio.
 
 - **Propósito:** detectar características, emparejar puntos, estimar transformaciones (homografías), fusionar vistas y medir objetos en la escena con calibración métrica.  
 - **Entradas:** imágenes (p. ej. 3 vistas del comedor) o datasets sintéticos con transformaciones conocidas.  
